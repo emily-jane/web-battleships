@@ -7,10 +7,20 @@ class BattleshipsWeb < Sinatra::Base
     erb :index
   end
 
-  get '/new_game' do
-  	@name = params[:name]
-  	erb :new_game
+	get '/register' do
+		erb :register
+	end
+
+  post '/register' do
+		@name = params[:name]
+	  redirect '/register' if @name == ''
+		redirect '/new_game'
   end
+
+	get '/new_game' do
+		erb :new_game
+
+	end
 
   # start the server if ruby file executed directly
   run! if app_file == $0

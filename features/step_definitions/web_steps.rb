@@ -7,6 +7,8 @@
 
 require 'uri'
 require 'cgi'
+require 'game'
+require 'player'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 module WithinHelpers
@@ -15,6 +17,33 @@ module WithinHelpers
   end
 end
 World(WithinHelpers)
+
+Then(/^The user inputs "([^"]*)"$/) do |name|
+  fill_in('name', :with => name)
+end
+
+Then(/^The user clicks "([^"]*)"$/) do |submit|
+  click_button('Submit')
+end
+
+Then(/^New game is created$/) do
+  player1 = Player.new("Owen")
+  player2 = Player.new("Emily")
+  game = Game.new(player1, player2)
+end
+
+When(/^name is "([^"]*)"$/) do |name|
+  fill_in('name', :with => ' ')
+end
+
+
+When(/^I click "([^"]*)"$/) do |submit|
+  click_button('Submit')
+end
+
+Then(/^I should see error$/) do
+  expect raise_error "Fill in name"
+end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
