@@ -41,8 +41,8 @@ When(/^I click "([^"]*)"$/) do |submit|
   click_button('Submit')
 end
 
-Then(/^I should see error$/) do
-  expect raise_error "Fill in name"
+Then(/^I am redirected to '\/register'$/) do
+  visit('/register')
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|

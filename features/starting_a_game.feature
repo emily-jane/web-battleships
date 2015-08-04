@@ -15,4 +15,4 @@ Feature: Starting the game
     Given I am on register
     When name is ""
     And I click "submit"
-    Then I should see error
+    Then I am redirected to '/register'
