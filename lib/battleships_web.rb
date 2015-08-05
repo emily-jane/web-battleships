@@ -2,6 +2,9 @@ require 'sinatra/base'
 require_relative 'game'
 
 class BattleshipsWeb < Sinatra::Base
+
+	enable :sessions
+
 	set :views, Proc.new { File.join(root,"..","views") }
   get '/' do
     'Hello BattleshipsWeb!'
@@ -15,11 +18,13 @@ class BattleshipsWeb < Sinatra::Base
   post '/register' do
 		@name = params[:name]
 	  redirect '/register' if @name == ''
-		redirect '/new_game'
+		redirect '/new-game'
   end
 
-	get '/new_game' do
-		$game = Game.new(@name,'computer')
+	get '/new-game' do
+		session[:game] = Game.new(@name,'computer')
+		options = {:size => 10, :cell => Cell, :number_of_pieces => 10}
+		session[:board] = Board.new(options)
 		erb :new_game
 	end
 
